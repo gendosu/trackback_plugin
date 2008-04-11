@@ -1,0 +1,40 @@
+TrackbackPlugin
+===============
+TrackbackPluginとは、モデルに対してトラックバック機能を付加するプラグインです。
+
+Introduction goes here.
+
+
+Example
+=======
+トラックバックを付けたいモデルに対して
+trackback_pluginと、宣言するだけ
+
+オプション
+=======
+title_column :: 記事のタイトルを保存しているカラムを設定します。デフォルトではtitleが設定される
+text_column :: 記事の本文を保存しているカラムを設定します。デフォルトではtextが設定される
+:blog_name :: ブログ名を設定します
+
+
+トラックバックを送信したいときは
+コントローラの、記事保存メソッドで以下の処理を呼び出します。
+article.trackback_list(url_for(:controller => 'top', :action => 'view', :id => article.id), trackbacks.join(','))
+一つ目の引数は、こちら側の記事へのURL
+二つ目の引数は、トラックバックを送りたいURLを,で区切った文字列(TODO ,区切りじゃなくて配列になる予定)
+
+
+トラックバックを受信するときは、以下のメソッドをコントローラに追加
+このメソッド名は決まっていないので、好きなメソッド名でおっけーです。
+def trackback
+  # 記事を特定
+  article = Article.find(params[:id])
+
+  # 内部でparamsを解析
+  render :xml => article.post_trackback(params)
+end
+
+Example goes here.
+
+
+Copyright (c) 2008 [name of plugin creator], released under the MIT license
