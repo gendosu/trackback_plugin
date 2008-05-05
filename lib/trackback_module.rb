@@ -5,7 +5,7 @@
 
 module TrackbackModule
   
-  include ActionView::Helpers::TextHelper
+#  include ActionView::Helpers::TextHelper
   require "rexml/document"
   require 'net/http'
   require "socket"
