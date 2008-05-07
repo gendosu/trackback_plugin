@@ -32,6 +32,8 @@ class TrackbackPluginGenerator < Rails::Generator::NamedBase
       
       # コントローラを配置
       m.template 'controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
+      
+      m.route_resources controller_file_name
     end 
   end
   
