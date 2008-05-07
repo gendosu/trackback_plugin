@@ -41,10 +41,6 @@ module TrackbackPlugin #:nodoc:
       return @trackback_list if @trackback_list
     end
         
-    def trackback_list=(value)
-      @trackback_list = TrackbackList.from(value)
-    end
-        
     # TODO やっぱりvalueのtrackbackの配列は、カンマ区切りじゃなくて、そのまま配列を渡した方がいい
     # === トラックバック送信依頼を出します
     # url :: 自分の記事のURL
