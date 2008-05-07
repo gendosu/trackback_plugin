@@ -95,7 +95,6 @@ module TrackbackPlugin #:nodoc:
           
       self.class.transaction do
         new_trackback_names.each do |new_trackback_name|
-          p self[trackback_plugin_options[:title_column]]
           
           # トラックバック送信
           do_tb_send(
