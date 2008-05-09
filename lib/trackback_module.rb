@@ -18,7 +18,7 @@ module TrackbackModule
   # trackback_url :: 相手のトラックバックURL
   def do_tb_send(title, url, blog_name, excerpt, trackback_url)
     uri = URI.parse trackback_url
-    query = ""
+    query = ''
     query = uri.query.to_s
     query << '&' if query && query.size > 0
     query << "title=#{CGI.escape(title)}&url=#{CGI.escape(url)}&blog_name=#{CGI.escape(blog_name)}&excerpt=#{CGI.escape(excerpt)}"
@@ -27,15 +27,15 @@ module TrackbackModule
     Net::HTTP.start(uri.host, uri.port) do |http|
       response,body = http.post(uri.path, query, header)
       doc = (REXML::Document.new body).root
-      val = REXML::XPath.first(doc, "child::error")
+      val = REXML::XPath.first(doc, 'child::error')
       if val
         return val.text
       end
     end
-    return "1"
+    return '1'
   rescue URI::InvalidURIError, Timeout::Error => exc
-    puts "-- do_tb_send NG -- " + exc.message
-    return "1"
+    puts '-- do_tb_send NG -- ' + exc.message
+    return '1'
   end
   
 end
