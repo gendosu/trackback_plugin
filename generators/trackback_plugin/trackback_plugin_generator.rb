@@ -44,7 +44,7 @@ class TrackbackPluginGenerator < Rails::Generator::NamedBase
   end
   
   def file_name
-    "trackback_plugin"
+    'trackback_plugin'
   end
   
   protected
