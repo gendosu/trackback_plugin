@@ -36,9 +36,10 @@ class TrackbackPluginGenerator < Rails::Generator::NamedBase
       # コントローラのフォルダを作成
       m.directory File.join('app/controllers', controller_class_path)
       
-      # コントローラを配置
-      m.template 'controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
+      # trackbackアクションを追加
+      add_trackback_action(m)
       
+      # routes.rbを設定
       route_resources controller_file_name
     end 
   end
@@ -52,6 +53,37 @@ class TrackbackPluginGenerator < Rails::Generator::NamedBase
   def banner
       "Usage: #{$0} trackback_plugin ModelName [ControllerName]"
   end
+  
+  def add_trackback_action(m)
+    
+    if File.exists?(File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb"))
+      sentinel = "class #{controller_class_name}Controller < ApplicationController"
+      
+      p sentinel
+      gsub_file File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb"), /(#{Regexp.escape(sentinel)})/mi do |match|
+<<EOS
+#{match}
+
+  protect_from_forgery :except => :trackback
+  
+  # === トラックバックを受け付けるアクションです
+  def trackback
+    
+    # 記事を特定
+    article = Article.find(params[:id])
+    
+    # 内部でparamsを解析
+    render :xml => article.post_trackback(params)
+  end
+EOS
+      end
+    else
+      # コントローラを配置
+      m.template 'controller.rb', File.join('app/controllers', controller_class_path, "#{controller_file_name}_controller.rb")
+    end
+    
+  end
+  
   
   def route_resources(resource)
     resource = resource.to_sym.inspect
