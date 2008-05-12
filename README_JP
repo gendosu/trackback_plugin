@@ -50,4 +50,4 @@ text_column :: 記事の本文を保存しているカラムを設定します�
 blog_name :: ブログ名を設定します
 
 
-Copyright (c) 2008 [Gen Takahashi], released under the GPL license
+Copyright (c) 2008 [Gen Takahashi], released under the MIT license
