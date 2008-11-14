@@ -1,3 +1,4 @@
+# TrackbackPlugin
 module TrackbackPlugin #:nodoc:
   def self.included(base)
     base.extend(ClassMethods)
