@@ -1,7 +1,7 @@
 # TrackbackPlugin
 module TrackbackPlugin #:nodoc:
   def self.included(base)
-    base.extend(ClassMethods)
+    base.send :extend, ClassMethods
   end
 
   # オプション
@@ -15,7 +15,7 @@ module TrackbackPlugin #:nodoc:
       before_save :save_cached_trackback_list
       #      after_save :save_trackbacks
           
-      include TrackbackPlugin::InstanceMethods
+      send :include, InstanceMethods
       extend TrackbackPlugin::SingletonMethods
       
       include TrackbackModule
